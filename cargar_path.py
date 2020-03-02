@@ -89,15 +89,29 @@ def getPrincipalEventsProd():
                             "query": {
                                 "match_all": {}
                             },
+                            "filter": {
+                                "bool": {
+                                "must": [
+                                    {
+                                    "range": {
+                                        "INFO_EPG.BEGINTIME": {
+                                        "gte": "2020/03/02 00:00:00"
+                                        }
+                                    }
+                                    }
+                                ]
+                                }
+                            },
                             "aggs": {
                                 "canales": {
                                 "terms": {
                                     "field": "CHANNEL_ID",
-                                    "size": 1
+                                    "size": 2150
                                 }
                                 }
                             }
-                            }
+                        }
+
     res_es_down_prod = elastic_down_prod_v1.search(index=indice_prod,body=query_events_prod)
 
     #print(res_es_down_prod)
@@ -113,3 +127,4 @@ def getPrincipalEventsProd():
 
     
 getPrincipalEventsProd()
+
